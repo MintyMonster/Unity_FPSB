@@ -9,6 +9,8 @@ public class InputManager : MonoBehaviour
     [SerializeField] ShootScript shootScript;
     [SerializeField] GunManager gunManager;
     [SerializeField] AirstrikeScript airstrike;
+    [SerializeField] QuitScript quit;
+    [SerializeField] InteractScript interact;
 
     PlayerController controls;
     PlayerController.GroundMovementActions groundMovement;
@@ -28,6 +30,8 @@ public class InputManager : MonoBehaviour
         groundMovement.Shoot.performed += _ => gunManager.Shoot(); // Shooting
         groundMovement.Reload.performed += _ => gunManager.Reload(); // Reloading
         groundMovement.Airstrike.performed += _ => airstrike.OnQPressed(); // Airstrike
+        groundMovement.Escape.performed += _ => quit.OnEscapePressed(); // Quit game
+        groundMovement.Interact.performed += _ => interact.OnInteractPressed(); // Interact button
         
     }
 

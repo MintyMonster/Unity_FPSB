@@ -30,6 +30,16 @@ public class GunManager : MonoBehaviour
         get { return totalAmmo; }
     }
 
+    public void RefillAmmo()
+    {
+        float an = 30 - currentAmmo;
+        float atn = 210 - totalAmmo;
+        currentAmmo += an;
+        totalAmmo += atn;
+        outOfAmmo = false;
+        reload = false;
+    }
+
     private void Update()
     {
         currentAmmoUI.GetComponent<Text>().text = currentAmmo.ToString(); // Set current ammo UI text

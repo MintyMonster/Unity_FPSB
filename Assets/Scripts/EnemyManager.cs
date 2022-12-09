@@ -8,6 +8,7 @@ public class EnemyManager : MonoBehaviour
 
     // Variables
     private GameObject destination;
+    private GameObject gm;
 
     private float health = 100f;
     private NavMeshAgent agent;
@@ -23,11 +24,18 @@ public class EnemyManager : MonoBehaviour
     {
         agent = transform.GetComponent<NavMeshAgent>(); // Get the navmeshagent
         destination = GameObject.FindGameObjectWithTag("Destination"); // Get the destination
+        gm = GameObject.FindGameObjectWithTag("GameManager");
 
     }
 
     void Update()
     {
         agent.SetDestination(destination.transform.position); // Start pathfinding
+
+        if(Vector3.Distance(destination.transform.position, agent.transform.position) < 2)
+        {
+            gm.GetComponent<GameManagerScript>().Health -= 10f;
+            Destroy(transform);
+        }
     }
 }

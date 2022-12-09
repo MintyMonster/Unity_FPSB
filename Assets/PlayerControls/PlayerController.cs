@@ -81,6 +81,22 @@ public class @PlayerController : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Escape"",
+                    ""type"": ""Button"",
+                    ""id"": ""c20e5639-e20b-4009-9160-6643564a3704"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""37b40ece-409e-45aa-ac5c-500929df5b6f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -215,6 +231,28 @@ public class @PlayerController : IInputActionCollection, IDisposable
                     ""action"": ""Airstrike"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""08431c11-2e2e-4625-88fc-3d3670597947"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Escape"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a90ab2cb-f99e-4554-91dc-28a17c55be94"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -231,6 +269,8 @@ public class @PlayerController : IInputActionCollection, IDisposable
         m_GroundMovement_Aim = m_GroundMovement.FindAction("Aim", throwIfNotFound: true);
         m_GroundMovement_Reload = m_GroundMovement.FindAction("Reload", throwIfNotFound: true);
         m_GroundMovement_Airstrike = m_GroundMovement.FindAction("Airstrike", throwIfNotFound: true);
+        m_GroundMovement_Escape = m_GroundMovement.FindAction("Escape", throwIfNotFound: true);
+        m_GroundMovement_Interact = m_GroundMovement.FindAction("Interact", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -288,6 +328,8 @@ public class @PlayerController : IInputActionCollection, IDisposable
     private readonly InputAction m_GroundMovement_Aim;
     private readonly InputAction m_GroundMovement_Reload;
     private readonly InputAction m_GroundMovement_Airstrike;
+    private readonly InputAction m_GroundMovement_Escape;
+    private readonly InputAction m_GroundMovement_Interact;
     public struct GroundMovementActions
     {
         private @PlayerController m_Wrapper;
@@ -300,6 +342,8 @@ public class @PlayerController : IInputActionCollection, IDisposable
         public InputAction @Aim => m_Wrapper.m_GroundMovement_Aim;
         public InputAction @Reload => m_Wrapper.m_GroundMovement_Reload;
         public InputAction @Airstrike => m_Wrapper.m_GroundMovement_Airstrike;
+        public InputAction @Escape => m_Wrapper.m_GroundMovement_Escape;
+        public InputAction @Interact => m_Wrapper.m_GroundMovement_Interact;
         public InputActionMap Get() { return m_Wrapper.m_GroundMovement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -333,6 +377,12 @@ public class @PlayerController : IInputActionCollection, IDisposable
                 @Airstrike.started -= m_Wrapper.m_GroundMovementActionsCallbackInterface.OnAirstrike;
                 @Airstrike.performed -= m_Wrapper.m_GroundMovementActionsCallbackInterface.OnAirstrike;
                 @Airstrike.canceled -= m_Wrapper.m_GroundMovementActionsCallbackInterface.OnAirstrike;
+                @Escape.started -= m_Wrapper.m_GroundMovementActionsCallbackInterface.OnEscape;
+                @Escape.performed -= m_Wrapper.m_GroundMovementActionsCallbackInterface.OnEscape;
+                @Escape.canceled -= m_Wrapper.m_GroundMovementActionsCallbackInterface.OnEscape;
+                @Interact.started -= m_Wrapper.m_GroundMovementActionsCallbackInterface.OnInteract;
+                @Interact.performed -= m_Wrapper.m_GroundMovementActionsCallbackInterface.OnInteract;
+                @Interact.canceled -= m_Wrapper.m_GroundMovementActionsCallbackInterface.OnInteract;
             }
             m_Wrapper.m_GroundMovementActionsCallbackInterface = instance;
             if (instance != null)
@@ -361,6 +411,12 @@ public class @PlayerController : IInputActionCollection, IDisposable
                 @Airstrike.started += instance.OnAirstrike;
                 @Airstrike.performed += instance.OnAirstrike;
                 @Airstrike.canceled += instance.OnAirstrike;
+                @Escape.started += instance.OnEscape;
+                @Escape.performed += instance.OnEscape;
+                @Escape.canceled += instance.OnEscape;
+                @Interact.started += instance.OnInteract;
+                @Interact.performed += instance.OnInteract;
+                @Interact.canceled += instance.OnInteract;
             }
         }
     }
@@ -375,5 +431,7 @@ public class @PlayerController : IInputActionCollection, IDisposable
         void OnAim(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
         void OnAirstrike(InputAction.CallbackContext context);
+        void OnEscape(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
     }
 }

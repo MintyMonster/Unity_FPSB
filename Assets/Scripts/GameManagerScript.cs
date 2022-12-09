@@ -14,6 +14,7 @@ public class GameManagerScript : MonoBehaviour
     [SerializeField] GameObject spawner;
     [SerializeField] GameObject HUDRoundTimer;
     [SerializeField] GameObject moneyCounter;
+    [SerializeField] Canvas deathCanvas;
 
     private int waitTime = 50;
     private int seconds = 0;
@@ -28,11 +29,13 @@ public class GameManagerScript : MonoBehaviour
     private float EnemiesOnMap = 0f;
     private bool changeRound = false;
     private bool countdown = false;
+    private float playerHealth = 100f;
 
     // Getters
     public float Round { get { return round; } }
     public float Points { get { return points; } }
     public float Money { get { return money; } }
+    public float Health { get { return playerHealth; } set { playerHealth = value; } }
 
     // Function based setters
     public void AddPoints(float amount) => points += amount;
@@ -104,6 +107,8 @@ public class GameManagerScript : MonoBehaviour
                 countdownCanvas.enabled = false;
             }
         }
+
+        if (playerHealth <= 0) deathCanvas.enabled = true;
     }
 
     public void ChangeRound() // Change round (higher the round, better it is)
